@@ -28,6 +28,7 @@
     "semistandard": "17.0.0"
   },
   "dependencies": {
-    "fastify": "^5.2.1"
+    "fastify": "^5.2.1",
+    "fastify-plugin": "^5.0.1"
   }
 }
