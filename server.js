@@ -1,7 +1,7 @@
 import fastify from 'fastify';
 import appPlugin, { serverOptions } from './app.js';
 
-const app = new fastify(serverOptions);
+const app = fastify(serverOptions);
 
 app.register(appPlugin);
 
