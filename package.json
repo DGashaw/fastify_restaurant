@@ -1,0 +1,33 @@
+{
+  "name": "fastify_restaurant",
+  "version": "1.0.0",
+  "description": "astify restaurant is a node JS API that allows customers to access menu and place an order. It also allows the chef to access the menu recipes, add new recipes, delete recipes and update the status of an order",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch server.js",
+    "lint": "semistandard *.js",
+    "cleancode": "npm run lint -- --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DGashaw/fastify_restaurant.git"
+  },
+  "keywords": [
+    "[restaurant",
+    "api]"
+  ],
+  "author": "Daniel Gashaw",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DGashaw/fastify_restaurant/issues"
+  },
+  "homepage": "https://github.com/DGashaw/fastify_restaurant#readme",
+  "type": "module",
+  "devDependencies": {
+    "semistandard": "17.0.0"
+  },
+  "dependencies": {
+    "fastify": "^5.2.1"
+  }
+}
