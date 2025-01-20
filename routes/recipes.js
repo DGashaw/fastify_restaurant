@@ -66,9 +66,10 @@ async function recipesPlugin(app, options){
                 );
 
                 response.code(201);
-                return {id: insertedRecipeId};
+                return {message: 'recipe added successfully', id: insertedRecipeId};
             }
             catch(error){
+                app.log.error(error.message);
                 response.code(500).send({error: error.message});
             }
         }
@@ -123,6 +124,7 @@ async function menuHandler(request, response){
         return allRecipes;
     }
     catch(error){
+        app.log(error.message);
         response.code(500).send({error: `${error.message}`});
     }
    

@@ -26,7 +26,6 @@ async function datasourcePlugin(app, options){
                 return result.insertedId;
             }
             catch(error){
-                app.log.error(`Error while adding a new recipe. Error: ${error.message}`);
                 throw new Error(`Error while adding a new recipe. Error: ${error.message}`);
             }
             
@@ -41,11 +40,10 @@ async function datasourcePlugin(app, options){
             try{
                 const { db } = app.mongo;
                 const collection = db.collection('menu');
-                const result = collection.find(filter, sort).toArray();
-                return result;
+                const recipes = collection.find(filter, sort).toArray();
+                return recipes;
             }
             catch(error){
-                app.log.error(`Error while reading all recipes. Error: ${error.message}`);
                 throw new Error(`Error while reading all recipes. Error: ${error.message}`);
             }
             
@@ -63,7 +61,6 @@ async function datasourcePlugin(app, options){
                 return result.stream()
             }
             catch(error){
-                app.log.error(`Error occured while streaming recipes. Error: ${error.message}`);
                 throw new Error(`Error occured while streaming recipes. Error: ${error.message}`);
             }
             
@@ -79,21 +76,62 @@ async function datasourcePlugin(app, options){
 
             }
             catch(error){
-                app.log.error('Error while deleting a recipe');
                 throw new Error(`Error while deleting a recipe. Error: ${error.message}`);
             }
         },
-        async insertOrder(order){
-            /** Not Implemented */
+        async addOrders(order){
+            try{
+                const _id = new app.mongo.ObjectId();
+                const id = _id.toString();
+                order._id = _id;
+                order.id = id;
+                const { db } = app.mongo;
+
+                const collection = db.collection('order');
+                const orderResult = await 
+                    collection.insertOne(order);
+                return orderResult.insertedId;
+            }
+            catch(error){
+                throw new Error(`Unable to add order. Error: ${error.message}`);
+            }
         },
-        async readOrders(filter, sort){
-            /** Not Implemented */
+        async readOrders(filter={}, sort = {createdAt: -1}){
+            try{
+                const { db } = app.mongo;
+                const collection = db.collection('order');
+                const orders = collection.aggregate([{$match: filter},{$sort: sort},
+                ]).toArray();
+
+                return orders;
+            }
+            catch(error){
+                throw new Error(`Unable to read all orders. Error: ${error.message}`);
+            }
         },
-        async deleteOrder(orderId){
-            /** Not Implemented */
+        async deleteOrders(orderId){
+            try{
+                const { db } = app.mongo;
+                const collection = db.collection('order');
+
+                const deleteCount = collection.deleteOne({_id: new app.mongo.ObjectId(orderId)});
+                return deleteCount
+            }
+            catch(error){
+                throw new Error(`Unable to delete the required oreder. Error: ${error.message}`)
+            }
         },
         async updateOrderStatus(orderID){
-            /** Not Implemented */
+            try{
+                const { db } = app.mongo;
+                const collection = db.collection('order');
+
+                const updateResult = collection.updateOne({_id: new app.mongo.ObjectId(orderID)}, {$set: {status: 'pending'}});
+                return updateResult;
+            }
+            catch(error){
+                throw new Error(`Unable update the order status. Error: ${error.message}`);
+            }
         }
     })
 }
