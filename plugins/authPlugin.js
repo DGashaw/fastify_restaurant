@@ -2,7 +2,7 @@ import fastifyPlugin from 'fastify-plugin'
 
 async function authPlugin(app, options){
     app.decorateRequest('isChef', function isChef(){
-        return this.headers['api-key'] === 'fastify-rocks';
+        return this.headers['api-key'] === options.accessToken;
     });
 
     app.decorate('authOnlyChef', async function(request, response){

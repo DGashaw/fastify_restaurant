@@ -4,7 +4,7 @@
   "description": "astify restaurant is a node JS API that allows customers to access menu and place an order. It also allows the chef to access the menu recipes, add new recipes, delete recipes and update the status of an order",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node ./test/*.test.js",
     "start": "node --watch server.js",
     "lint": "semistandard *.js",
     "cleancode": "npm run lint -- --fix"
@@ -28,6 +28,7 @@
     "semistandard": "17.0.0"
   },
   "dependencies": {
+    "@fastify/env": "^5.0.2",
     "fastify": "^5.2.1",
     "fastify-mongodb": "^4.1.1",
     "fastify-plugin": "^5.0.1",

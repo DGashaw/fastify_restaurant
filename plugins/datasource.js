@@ -5,7 +5,7 @@ async function datasourcePlugin(app, options){
     //'mongodb+srv://fastify_restaurant:sVaCU2x7wvI8wcEr@restaurant.zrvda.mongodb.net/?retryWrites=true&w=majority&appName=restaurant'
     app.log.info('Establishing connection with mongoDB');
     app.register(fastifyMongo, {
-        url: 'mongodb://localhost:27017/restaurant'
+        url: options.databaseUrl
     })
 
     app.decorate('source', {
